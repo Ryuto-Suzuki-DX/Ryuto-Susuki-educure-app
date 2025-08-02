@@ -62,15 +62,17 @@
             AND created_at &gt;= #{regDateFrom}
         </if>
         <if test="regDateTo != null">
-            AND created_at &lt;= #{regDateTo}
+            AND created_at &lt; #{regDateToPlusOne}
         </if>
         <if test="updDateFrom != null">
             AND updated_at &gt;= #{updDateFrom}
         </if>
         <if test="updDateTo != null">
-            AND updated_at &lt;= #{updDateTo}
+            AND updated_at &lt; #{updDateToPlusOne}
         </if>
     </select>
-    
+
+
+
 </mapper>
 
