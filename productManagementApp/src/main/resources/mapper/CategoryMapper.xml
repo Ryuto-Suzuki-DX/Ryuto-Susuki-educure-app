@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jp.dataxeed.pm.mapper.CategoryMapper">
+
+    <!--全取得-->
+    <select id="findAll" resultType="com.jp.dataxeed.pm.entity.CategoryEntity">
+        SELECT * FROM categories
+    </select>
+
+    <!--単体取得-->
+    <select id="findById" parameterType="int" resultType="com.jp.dataxeed.pm.entity.CategoryEntity">
+        SELECT * FROM categories WHERE id = #{id}
+    </select>
+
+    <!--追加-->
+    <insert id="insertCategories" parameterType="com.jp.dataxeed.pm.entity.CategoryEntity" useGeneratedKeys="true" keyProperty="id"> 
+        INSERT INTO categories (name)
+        VALUES (#{name})
+    </insert>
+
+    <!--更新-->
+    <update id="updateCategoryById" parameterType="com.jp.dataxeed.pm.entity.CategoryEntity">
+        UPDATE categories SET name = #{name},
+                              updated_at = CURRENT_TIMESTAMP
+                          WHERE id = #{id}
+    </update>
+
+    <!--理論削除-->
+    <update id="deleteCategoryLogical" parameterType="int">
+        UPDATE categories SET delete_flag = TRUE,
+                         updated_at = CURRENT_TIMESTAMP
+                     WHERE id = #{id}
+    </update>
+
+</mapper>

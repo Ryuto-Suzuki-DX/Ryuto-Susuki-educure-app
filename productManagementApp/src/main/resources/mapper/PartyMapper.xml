@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jp.dataxeed.pm.mapper.PartyMapper">
+
+    <!--全取得-->
+    <select id="findAll" resultType="com.jp.dataxeed.pm.entity.PartyEntity">
+        SELECT * FROM parties
+    </select>
+
+    <!--単体取得-->
+    <select id="findById" parameterType="int" resultType="com.jp.dataxeed.pm.entity.PartyEntity">
+        SELECT * FROM parties WHERE id= #{id}
+    </select>
+
+    <!--追加-->
+    <insert id="insertParty" parameterType="com.jp.dataxeed.pm.entity.PartyEntity" useGeneratedKeys="true" keyProperty="id"> 
+        INSERT INTO parties (party_code, name, address, detail, attention)
+        VALUES (#{partyCode}, #{name}, #{address}, #{detail}, #{attention})
+    </insert>
+
+    <!--更新-->
+    <update id="updatePartyById" parameterType="com.jp.dataxeed.pm.entity.PartyEntity">
+        UPDATE parties SET party_code = #{partyCode},
+                           name = #{name},
+                           address = #{address},
+                           detail = #{detail},
+                           attention = #{attention},
+                           updated_at = CURRENT_TIMESTAMP
+                       WHERE id = #{id}
+    </update>
+
+    <!--理論削除-->
+    <update id="deletePartyLogical" parameterType="int">
+        UPDATE parties SET delete_flag = TRUE,
+                           updated_at = CURRENT_TIMESTAMP
+                       WHERE id = #{id}
+    </update>
+
+</mapper>

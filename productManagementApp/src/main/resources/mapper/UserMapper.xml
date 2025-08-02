@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jp.dataxeed.pm.mapper.UserMapper">
+
+    <!--全取得-->
+    <select id="findAll" resultType="com.jp.dataxeed.pm.entity.UserEntity">
+        SELECT * FROM users
+    </select>
+
+    <!--単体取得ById-->
+    <select id="findById" parameterType="int" resultType="com.jp.dataxeed.pm.entity.UserEntity">
+        SELECT * FROM users WHERE id = #{id}
+    </select>
+
+    <!--単体取得ByUsername-->
+    <select id="findByUsername" parameterType="string" resultType="com.jp.dataxeed.pm.entity.UserEntity">
+        <!-- schema.sqlとdata.sqlに合わせ、カラム名を 'username' に修正 -->
+        SELECT * FROM users WHERE username = #{username}
+        AND delete_flag = FALSE
+    </select>
+
+    <!--追加-->
+    <insert id="insertUser" parameterType="com.jp.dataxeed.pm.entity.UserEntity" useGeneratedKeys="true" keyProperty="id"> 
+        <!-- schema.sqlとdata.sqlに合わせ、カラム名を 'username' に修正 -->
+        INSERT INTO users (username, name, password, role)
+        VALUES (#{username}, #{name}, #{password}, #{role})
+    </insert>
+
+    <!--更新-->
+    <update id="updateUserById" parameterType="com.jp.dataxeed.pm.entity.UserEntity">
+        <!-- schema.sqlとdata.sqlに合わせ、カラム名を 'username' に修正 -->
+        UPDATE users SET username = #{username},
+                          name = #{name},
+                          password = #{password},
+                          role = #{role},
+                          updated_at = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+    </update>
+
+    <!--理論削除-->
+    <update id="deleteUserLogical" parameterType="int">
+        UPDATE users SET delete_flag = TRUE,
+                          updated_at = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+    </update>
+
+    <select id="searchUsers" parameterType="com.jp.dataxeed.pm.Form.UserSearchForm" resultType="com.jp.dataxeed.pm.entity.UserEntity">
+        SELECT * FROM users WHERE delete_flag = FALSE
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="name != null and name != ''">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="role != null and role != ''">
+            AND role = #{role}
+        </if>
+        <if test="regDateFrom != null">
+            AND created_at &gt;= #{regDateFrom}
+        </if>
+        <if test="regDateTo != null">
+            AND created_at &lt;= #{regDateTo}
+        </if>
+        <if test="updDateFrom != null">
+            AND updated_at &gt;= #{updDateFrom}
+        </if>
+        <if test="updDateTo != null">
+            AND updated_at &lt;= #{updDateTo}
+        </if>
+    </select>
+    
+</mapper>
+
