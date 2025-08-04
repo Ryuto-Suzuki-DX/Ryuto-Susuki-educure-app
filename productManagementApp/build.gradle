@@ -13,25 +13,37 @@ repositories {
 }
 
 dependencies {
+    // Spring Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    // ★ MyBatis のバージョン明示
+    // Thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+
+    // Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'javax.annotation:javax.annotation-api:1.3.2'
+
+    // JPA (for @Entity, @Id, @Column, etc.)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Validation (for @NotNull, @Size, etc.)
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // MyBatis
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 
-    // PostgreSQLドライバ
+    // PostgreSQL JDBC Driver
     implementation 'org.postgresql:postgresql'
 
     // Lombok
     implementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 
-    // テスト用
+    // 開発用 (Hot reload など)
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // テスト
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-	//レンダリング機能追加
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
-    //Spring Security用
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-
 }

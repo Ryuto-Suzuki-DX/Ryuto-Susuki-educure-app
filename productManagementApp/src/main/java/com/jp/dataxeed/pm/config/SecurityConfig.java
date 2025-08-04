@@ -66,6 +66,7 @@ public class SecurityConfig {
     public GrantedAuthoritiesMapper authoritiesMapper() {
         SimpleAuthorityMapper authorityMapper = new SimpleAuthorityMapper();
         authorityMapper.setPrefix("ROLE_"); // データベースのロール名に"ROLE_"プレフィックスを追加
+        authorityMapper.setConvertToUpperCase(true); // ← これを追加
         return authorityMapper;
     }
 }
